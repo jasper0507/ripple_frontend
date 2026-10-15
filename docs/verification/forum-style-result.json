@@ -1,0 +1,52 @@
+{
+  "textContrast": {
+    "正文": {
+      "#ffffff": 16.1,
+      "#f5f6f8": 14.89
+    },
+    "辅助文字": {
+      "#ffffff": 4.97,
+      "#f5f6f8": 4.6
+    },
+    "链接": {
+      "#ffffff": 5.56,
+      "#f5f6f8": 5.14
+    },
+    "回复关联": {
+      "#ffffff": 6.18,
+      "#f5f6f8": 5.72
+    },
+    "危险": {
+      "#ffffff": 6.57,
+      "#f5f6f8": 6.08
+    },
+    "成功": {
+      "#ffffff": 5.85,
+      "#f5f6f8": 5.41
+    },
+    "警示": {
+      "#ffffff": 6.06,
+      "#f5f6f8": 5.61
+    }
+  },
+  "controlOnSurfaceContrast": {
+    "#ffffff": 3.15
+  },
+  "feedbackContrast": {
+    "成功浅底": 5.38,
+    "危险浅底": 5.94,
+    "警示浅底": 5.66,
+    "信息浅底": 4.97
+  },
+  "brandContrast": 11.29,
+  "primaryButtonContrast": 16.1,
+  "unchangedBusinessPaths": [
+    "src/api",
+    "src/lib",
+    "src/app/session",
+    "src/app/session.tsx",
+    "src/app/router.tsx",
+    "src/app/providers.tsx"
+  ],
+  "scope": "颜色计算、源文件比对；不代表浏览器布局通过。"
+}

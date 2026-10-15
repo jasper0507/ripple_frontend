@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "shortNameTarget": true,
+  "shortNameBox": {
+    "width": 44,
+    "height": 44
+  },
+  "longCommunity": true,
+  "longTitle": true,
+  "viewport": 320
+}

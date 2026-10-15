@@ -1,0 +1,14 @@
+{
+  "style_checks": {
+    "selected_vote_styles_compiled": true,
+    "input_boundary_compiled": true,
+    "no_yellow_brand": true,
+    "mobile_input_16px": true,
+    "preview_uses_final_css": true
+  },
+  "preview_views": 8,
+  "home_fixture_posts": 10,
+  "runtime_limitations": [
+    "未获得真实浏览器截图"
+  ]
+}

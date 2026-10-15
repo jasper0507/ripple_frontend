@@ -1,0 +1,42 @@
+{
+  "forbiddenStyleViolations": [],
+  "textContrast": {
+    "正文": {
+      "#f8f5f0": 12.84,
+      "#f3efe8": 12.18
+    },
+    "辅助文字": {
+      "#f8f5f0": 5.54,
+      "#f3efe8": 5.25
+    },
+    "操作/成功": {
+      "#f8f5f0": 6.03,
+      "#f3efe8": 5.72
+    },
+    "回复关联": {
+      "#f8f5f0": 6.06,
+      "#f3efe8": 5.75
+    },
+    "危险": {
+      "#f8f5f0": 5.84,
+      "#f3efe8": 5.54
+    },
+    "警示": {
+      "#f8f5f0": 6.12,
+      "#f3efe8": 5.81
+    }
+  },
+  "controlContrast": {
+    "#f8f5f0": 3.58,
+    "#f3efe8": 3.4
+  },
+  "unchangedBusinessPaths": [
+    "src/api",
+    "src/lib",
+    "src/app/session",
+    "src/app/session.tsx",
+    "src/app/router.tsx",
+    "src/app/providers.tsx"
+  ],
+  "scope": "源代码静态规则、颜色计算与文件比对；不代表浏览器布局通过。"
+}

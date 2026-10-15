@@ -1,0 +1,7 @@
+node_modules
+dist
+dist-ssr
+artifacts/
+*.local
+.DS_Store
+.playwright-cli

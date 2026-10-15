@@ -1,15 +1,15 @@
 <div align="center">
 
-# Bluebell Frontend
+# Ripple Frontend
 
-**Bluebell 社区论坛的 Web 前端：游客浏览、发帖、投票、评论回复**
+**Ripple 社区论坛的 Web 前端：游客浏览、发帖、投票、评论回复**
 
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-7-646CFF?logo=vite&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)
 
-[后端](https://github.com/jasper0507/bluebell) · [前端规划](docs/frontend-plan.md) · [设计](docs/DESIGN.md)
+[后端](https://github.com/jasper0507/ripple) · [前端规划](docs/frontend-plan.md) · [设计](docs/DESIGN.md)
 
 </div>
 
@@ -21,7 +21,7 @@
 
 ## 快速开始
 
-需要 Node.js 24、pnpm 11，并先按[后端说明](https://github.com/jasper0507/bluebell#快速开始)启动服务。
+需要 Node.js 24、pnpm 11，并先按[后端说明](https://github.com/jasper0507/ripple#快速开始)启动服务。
 
 ```bash
 make install
@@ -36,12 +36,12 @@ make check    # 类型、lint、测试、契约检查、构建
 Caddy 在同一域名下提供静态文件并反代 API：
 
 ```caddyfile
-bluebell.example.com {
+ripple.example.com {
 	handle /api/v1/* {
 		reverse_proxy 127.0.0.1:8080
 	}
 	handle {
-		root * /var/www/bluebell
+		root * /var/www/ripple
 		try_files {path} /index.html
 		file_server
 	}

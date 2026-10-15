@@ -18,14 +18,14 @@
 
 > 2026-10-05 品牌细节：采用最终通过验证的 C 偏弧字标与无字母的抽象标签页图标，沿用当前配色、布局和留白。只保留最终版本，见[品牌验证](verification/brand-c.md)。
 
-# Bluebell 前端规划
+# Ripple 前端规划
 
 当前进度：Phase 1、Phase 2 已完成原范围收口，Phase 3 架构讨论已收口；Phase 4 前端方案讨论已收口，Q1–Q10 均已确认。2026-10-03 整理规格时再次只读核查至后端 `07b149c`，刷新、退出处理和 OpenAPI 均已更新；恢复用户名、跨标签页认证协调及异常边界仍待对齐和实测。工程初始化、API/types 实施与联调尚未开始。
 
 ## 已确认的项目边界
 
-- Bluebell 采用前后端分离，本仓库是前端仓库。
-- 后端位于 `~/dev/work/bluebell_backend`，代码已由用户实现；禁止修改后端代码。
+- Ripple 采用前后端分离，本仓库是前端仓库。
+- 后端位于 `~/dev/work/ripple_backend`，代码已由用户实现；禁止修改后端代码。
 - 前端按照后端接口文档实现。发现接口限制或文档与实现不一致时，记录影响并讨论前端处理方式。
 - 首版覆盖全部现有业务能力：注册/登录、社区与帖子浏览、发帖、赞成/反对/取消投票、评论/回复，以及删除自己的内容。
 - 首版的主要使用目标是作品演示：完整展示上述真实业务流程。
@@ -58,10 +58,10 @@ Phase 1–4 的每个阶段都使用 `grill-with-docs`，组合执行 `grilling`
 
 最新核对日期：2026-10-03。整理规格时只读核查后端 HEAD `07b149c64fb49a7b4378c2f01ece102d9fa42d75`，工作区干净；对照前次 `baf9922d99980477a86ac5f662862fd989eecf8c` 后的提交，跟踪认证处理器、服务、令牌与存储调用。OpenAPI SHA256 已更新为 `6539ce9aa42e0a4e1a02828008d5a5bf582495dcac6acb4efa299fc6b05cd0d0`，原后端 `docs/README.md` 已移除。前次核查记录保留为历史，当前状态以本节与[最新规格复核](#2026-10-03-规格整理时的再次复核)为准。
 
-- [后端项目说明](../../bluebell_backend/README.md)。
-- [OpenAPI 3.1.1](../../bluebell_backend/docs/openapi.yaml)：接口定义的唯一维护入口，已记载 17 个操作、新认证路径、刷新轮换与退出行为。
-- [路由与鉴权范围](../../bluebell_backend/internal/router/router.go)。
-- [请求与响应处理](../../bluebell_backend/internal/handler/)、[业务规则](../../bluebell_backend/internal/service/)、[错误码](../../bluebell_backend/internal/response/code.go)。
+- [后端项目说明](../../ripple_backend/README.md)。
+- [OpenAPI 3.1.1](../../ripple_backend/docs/openapi.yaml)：接口定义的唯一维护入口，已记载 17 个操作、新认证路径、刷新轮换与退出行为。
+- [路由与鉴权范围](../../ripple_backend/internal/router/router.go)。
+- [请求与响应处理](../../ripple_backend/internal/handler/)、[业务规则](../../ripple_backend/internal/service/)、[错误码](../../ripple_backend/internal/response/code.go)。
 
 此前已静态核对路由、关键字段、鉴权、投票和评论规则；本次对照源码变更复核认证及其对前端的影响，未做后端代码质量审计，未启动服务或进行 HTTP 联调。OpenAPI 仍是后续类型生成的唯一输入，显式同步前需核对实现与契约；源码、文档已更新不等于浏览器认证行为已通过验收。
 
@@ -91,7 +91,7 @@ Phase 1–4 的每个阶段都使用 `grill-with-docs`，组合执行 `grilling`
 ### 会影响页面和流程的约束
 
 1. **公开浏览已纳入首版。** 社区列表与详情、帖子列表与详情、评论列表五类查询均已公开；这些接口不解析 Authorization，携带过期或无效令牌也不会因此返回 `401`。受保护业务写操作与查询本人投票状态仍需要 Bearer JWT。用户已在 Phase 4 确认游客可阅读，需要登录的操作再进入登录流程；这替代原先所有内容页都要求登录的设计。
-2. **认证接口已实现，浏览器行为尚待验收。** 登录、刷新、退出及 Cookie 处理均已接通。登录 JSON 不含用户 ID 或 `expires_in`；刷新 JSON 仅含 `access_token` 和 `token_type`。JWT 的 `sub` 为用户 UUID，`exp` 为到期时间，不含用户名，见 [token.go](../../bluebell_backend/internal/service/token.go)。默认期限为 Access JWT 15 分钟、Refresh Token 7 天，配置命名空间为 `auth`，见 [config.go](../../bluebell_backend/internal/config/config.go)；未读取真实配置，前端不硬编码期限。刷新沿用剩余 TTL，不延长会话；后端仍无当前用户资料查询，冷启动恢复用户名以及跨标签页认证协调需明确后再实现。
+2. **认证接口已实现，浏览器行为尚待验收。** 登录、刷新、退出及 Cookie 处理均已接通。登录 JSON 不含用户 ID 或 `expires_in`；刷新 JSON 仅含 `access_token` 和 `token_type`。JWT 的 `sub` 为用户 UUID，`exp` 为到期时间，不含用户名，见 [token.go](../../ripple_backend/internal/service/token.go)。默认期限为 Access JWT 15 分钟、Refresh Token 7 天，配置命名空间为 `auth`，见 [config.go](../../ripple_backend/internal/config/config.go)；未读取真实配置，前端不硬编码期限。刷新沿用剩余 TTL，不延长会话；后端仍无当前用户资料查询，冷启动恢复用户名以及跨标签页认证协调需明确后再实现。
 3. **注册和登录校验不同。** 注册用户名为 3–64 位英文字母或数字，密码为 8–64 位英文字母或数字，两次密码必须一致。登录只要求非空且各不超过 64 个字符，不能套用注册的限制。
 4. **分页固定每页 10 条。** 帖子和评论页码从 1 开始，不支持自定义 `page_size`。帖子按 `time` 或 `hot` 排序；评论按创建时间升序，同一时间按 ID 升序。
 5. **列表字段有限。** 帖子列表不含正文、摘要、评论数或当前用户投票状态；社区列表只有 ID 和名称。按不存在的社区 ID 筛选帖子可能得到空列表，社区页应通过社区详情接口区分不存在与暂无帖子。
@@ -193,7 +193,7 @@ Phase 1–4 的每个阶段都使用 `grill-with-docs`，组合执行 `grilling`
 
 演示数据的静态核查结果：
 
-- [迁移入口](../../bluebell_backend/cmd/migrate/main.go)仅建表；仓库未发现 seed/fixture，社区接口只有查询。[创建帖子](../../bluebell_backend/internal/service/post.go)要求社区已存在。因此至少一个可用社区是演示前提，实际环境是否已有社区尚未验证。
+- [迁移入口](../../ripple_backend/cmd/migrate/main.go)仅建表；仓库未发现 seed/fixture，社区接口只有查询。[创建帖子](../../ripple_backend/internal/service/post.go)要求社区已存在。因此至少一个可用社区是演示前提，实际环境是否已有社区尚未验证。
 - 已有社区且后端正常时，可通过现有 API 注册演示账号、创建帖子和评论。创建帖子会同时写数据库和初始化 Redis，演示内容应通过真实 API 准备。
 - 展示第二批滚动加载至少需要 11 条帖子，以及同一帖子下至少 11 条评论；社区页的滚动验收也需要该社区内超过 10 条帖子。
 - 投票只在帖子创建后 7 天内可用；演示现场新建帖子可避免旧数据过期影响成功流程。
@@ -339,8 +339,8 @@ src/
 
 ### 参考核查与限制
 
-- [NodeSeek 首页](https://www.nodeseek.com/)的文本可读取，浏览器访问被 Cloudflare 返回 `403`。随后已下载并实际查看用户提供的[桌面截图](design/nodeseek-reference.jpg)，据此核实视觉参考；仍未核实原站 CSS 和手机布局。上述尺寸与手机方案属于 Bluebell 的设计约定，不是对参考站 CSS 的复刻。
-- 参考站包含搜索、评论统计、最后回复等展示；Bluebell 只使用现有接口支持的字段和功能。紧凑列表继续使用标题、作者、社区、时间、票数；排序仍为最新/最热。
+- [NodeSeek 首页](https://www.nodeseek.com/)的文本可读取，浏览器访问被 Cloudflare 返回 `403`。随后已下载并实际查看用户提供的[桌面截图](design/nodeseek-reference.jpg)，据此核实视觉参考；仍未核实原站 CSS 和手机布局。上述尺寸与手机方案属于 Ripple 的设计约定，不是对参考站 CSS 的复刻。
+- 参考站包含搜索、评论统计、最后回复等展示；Ripple 只使用现有接口支持的字段和功能。紧凑列表继续使用标题、作者、社区、时间、票数；排序仍为最新/最热。
 - [TanStack Query 默认行为](https://tanstack.com/query/latest/docs/framework/react/guides/important-defaults)：过期查询默认会在挂载、窗口重新聚焦、网络恢复时重新获取；闲置查询默认 5 分钟后被清理。必须为 Phase 1 的列表顺序和返回恢复规则配置合适的策略，不能直接套用默认值。
 - [sessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)按来源和标签页隔离，可跨刷新保存；带 opener 的新页面可能复制初始存储，之后修改互不影响。它不提供跨标签页同步，也不改变后端令牌有效期。
 - [React Router 模式](https://reactrouter.com/start/modes)区分 Declarative、Data 和 Framework；采用 React Router 本身不等于已确认使用其全部数据加载机制。
@@ -449,7 +449,7 @@ Phase 4 接入前需对齐的新契约：
 - 哪些鉴权错误可以触发续期，哪些代表最终失效或临时故障；登录和刷新自身不进入递归刷新流程。
 - Cookie 的作用域、HttpOnly、Secure、SameSite、持久有效期及 CSRF 防护契约，并与开发代理、同源部署和已确认的浏览器会话范围一起核对。
 
-参考依据：[RFC 6749 §1.5](https://www.rfc-editor.org/rfc/rfc6749#section-1.5) 区分访问令牌与刷新令牌，[§5.2](https://www.rfc-editor.org/rfc/rfc6749#section-5.2) 描述确定的凭据失效错误，[RFC 9700 §4.14](https://www.rfc-editor.org/rfc/rfc9700#section-4.14) 讨论刷新令牌轮换与重用；这些资料用于核对设计概念，不预设 Bluebell 采用 OAuth 协议或相同错误码。[MDN Cookie 说明](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies) 与 [sessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage) 的作用域差异用于复核标签页约定。
+参考依据：[RFC 6749 §1.5](https://www.rfc-editor.org/rfc/rfc6749#section-1.5) 区分访问令牌与刷新令牌，[§5.2](https://www.rfc-editor.org/rfc/rfc6749#section-5.2) 描述确定的凭据失效错误，[RFC 9700 §4.14](https://www.rfc-editor.org/rfc/rfc9700#section-4.14) 讨论刷新令牌轮换与重用；这些资料用于核对设计概念，不预设 Ripple 采用 OAuth 协议或相同错误码。[MDN Cookie 说明](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies) 与 [sessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage) 的作用域差异用于复核标签页约定。
 
 [MDN Set-Cookie](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie) 说明 Cookie 有效期、浏览器会话恢复与响应头处理；[RFC 6265 §4.1.1](https://httpwg.org/specs/rfc6265.html#section-4.1.1) 说明并发响应设置 Cookie 的竞态。由此推导出的架构要求是：跨标签页协调、迟到响应隔离和后端撤销需共同保证会话行为，不能仅靠单个标签页内的请求合并或丢弃响应实现。
 
@@ -553,7 +553,7 @@ Q6、Q7 已于 2026-10-03 获用户确认。以上均为前端请求层规则；
 
 写操作结果未确认时保留适用输入，不自动重发；网络失败或服务器错误均不能直接证明未写入。服务端已确认写入、随后读取失败时，分别表达“操作成功”和“数据暂未更新”。同一操作提交期间防止重复点击；成功回调只处理本次提交及其对应会话、草稿，不能清掉后来编辑的内容。
 
-上述成功响应依据：[创建帖子与投票](../../bluebell_backend/internal/handler/post.go)、[创建及删除评论](../../bluebell_backend/internal/handler/comment.go)。评论按时间和 ID 升序使用 offset 分页，删除只软删目标，见 [CommentRepository](../../bluebell_backend/internal/repository/comment.go) 与 [CommentService](../../bluebell_backend/internal/service/comment.go)；分页偏移是据此推导的前端限制。
+上述成功响应依据：[创建帖子与投票](../../ripple_backend/internal/handler/post.go)、[创建及删除评论](../../ripple_backend/internal/handler/comment.go)。评论按时间和 ID 升序使用 offset 分页，删除只软删目标，见 [CommentRepository](../../ripple_backend/internal/repository/comment.go) 与 [CommentService](../../ripple_backend/internal/service/comment.go)；分页偏移是据此推导的前端限制。
 
 ### 已确认的契约检查与验收方式（Q10）
 
@@ -574,15 +574,15 @@ Q6、Q7 已于 2026-10-03 获用户确认。以上均为前端请求层规则；
 
 | 变化或缺口 | 最新源码依据 | 前端计划调整 |
 | --- | --- | --- |
-| 注册与登录路径已改变 | [router.go](../../bluebell_backend/internal/router/router.go) 挂载 `POST /api/v1/signup`、`POST /api/v1/login`，不再挂载旧 `/users/*` 路径 | 更新后续请求路径与联调样例；浏览器页面 `/register`、`/login` 保持不变，不能混同 API 路径 |
-| 登录签发与 Redis 保存已接通 | [AuthService.Login](../../bluebell_backend/internal/service/auth.go) 调用 [TokenManager.IssueTokens](../../bluebell_backend/internal/service/token.go)，并实际调用 [RefreshTokenStore.Save](../../bluebell_backend/internal/store/refresh_token.go) | 从“尚无 Refresh Token 实现”改为“签发已实现，浏览器续期未接通”；前端不接触 Redis 或其 key 结构 |
-| 登录 JSON 不变，刷新凭据改由 Cookie 交付 | [AuthHandler.Login](../../bluebell_backend/internal/handler/auth.go) 仍返回 `username`、`access_token`、`token_type`，无 `user_id`、`expires_in`、`refresh_token`；成功响应已设置 Cookie | 不新增读取或持久化 JSON Refresh Token 的前端逻辑；登录交付凭据不代表刷新与持久登录恢复已就绪 |
+| 注册与登录路径已改变 | [router.go](../../ripple_backend/internal/router/router.go) 挂载 `POST /api/v1/signup`、`POST /api/v1/login`，不再挂载旧 `/users/*` 路径 | 更新后续请求路径与联调样例；浏览器页面 `/register`、`/login` 保持不变，不能混同 API 路径 |
+| 登录签发与 Redis 保存已接通 | [AuthService.Login](../../ripple_backend/internal/service/auth.go) 调用 [TokenManager.IssueTokens](../../ripple_backend/internal/service/token.go)，并实际调用 [RefreshTokenStore.Save](../../ripple_backend/internal/store/refresh_token.go) | 从“尚无 Refresh Token 实现”改为“签发已实现，浏览器续期未接通”；前端不接触 Redis 或其 key 结构 |
+| 登录 JSON 不变，刷新凭据改由 Cookie 交付 | [AuthHandler.Login](../../ripple_backend/internal/handler/auth.go) 仍返回 `username`、`access_token`、`token_type`，无 `user_id`、`expires_in`、`refresh_token`；成功响应已设置 Cookie | 不新增读取或持久化 JSON Refresh Token 的前端逻辑；登录交付凭据不代表刷新与持久登录恢复已就绪 |
 | 登录新增 Redis 依赖 | 保存 Refresh Token 失败会沿登录调用链返回 `500 / INTERNAL_ERROR`；账号密码错误仍是 `401 / INVALID_CREDENTIALS` | 登录联调需实际数据库和 Redis 可用；依照 Q6 显示系统/网络失败，保留输入，不误判密码错误，也不自动重试登录 |
-| 刷新和退出仅有路由占位 | [AuthHandler.Refresh / Logout](../../bluebell_backend/internal/handler/auth.go) 方法体仅 TODO，没有业务调用、显式状态码或响应定义 | 不把路径存在、空响应或偶然的成功状态当作接口已可用；自动续期、持久登录、服务端退出与相应联调仍列为未就绪 |
-| 登录 Cookie 已接通 | [AuthHandler.setRefreshTokenCookie](../../bluebell_backend/internal/handler/auth.go) 设置 `refresh_token`、`Path=/`、`HttpOnly=true`、`SameSite=Lax`，`Expires` 与 `MaxAge` 来自 Refresh Token TTL；[应用组装](../../bluebell_backend/internal/app/app.go) 已传入 `CookieSecure` | 沿用同源代理，由浏览器接收与携带 Cookie；不让脚本读取刷新凭据。Secure 的部署值、浏览器实际存储与发送、后续刷新和退出行为仍需验证；不据 SameSite 设置推断完整 CSRF 契约 |
-| 默认期限与配置名称变化 | [config.go](../../bluebell_backend/internal/config/config.go) 默认 `auth.access_token_ttl` 为 15 分钟、`auth.refresh_token_ttl` 为 7 天；JWT 仍含 `sub` 与 `exp` | 删除旧的 30 分钟假设；前端依据令牌和最终契约判断到期，不把代码默认值写成固定前端计时器，也不推断部署配置 |
-| 当前业务鉴权错误未细分 | [JWTAuth](../../bluebell_backend/internal/middleware/auth.go) 对缺失、格式错误或校验失败仍返回 `401 / UNAUTHORIZED`；尚无刷新失败分类 | 保留登录凭据错误与业务鉴权错误的区分，等待刷新接口定义最终失效和临时故障语义；前端不猜测新增业务码 |
-| OpenAPI 未随源码更新 | [OpenAPI](../../bluebell_backend/docs/openapi.yaml) 仍使用旧注册/登录路径、`jwt` 配置和 30 分钟说明，缺少新刷新与退出操作；文件哈希未变 | 当前文档不作为新认证的可交付快照；待后端文档与已实现行为一致，再按已确认流程同步、生成和检查差异，不手写第二份认证契约或直接改生成类型 |
+| 刷新和退出仅有路由占位 | [AuthHandler.Refresh / Logout](../../ripple_backend/internal/handler/auth.go) 方法体仅 TODO，没有业务调用、显式状态码或响应定义 | 不把路径存在、空响应或偶然的成功状态当作接口已可用；自动续期、持久登录、服务端退出与相应联调仍列为未就绪 |
+| 登录 Cookie 已接通 | [AuthHandler.setRefreshTokenCookie](../../ripple_backend/internal/handler/auth.go) 设置 `refresh_token`、`Path=/`、`HttpOnly=true`、`SameSite=Lax`，`Expires` 与 `MaxAge` 来自 Refresh Token TTL；[应用组装](../../ripple_backend/internal/app/app.go) 已传入 `CookieSecure` | 沿用同源代理，由浏览器接收与携带 Cookie；不让脚本读取刷新凭据。Secure 的部署值、浏览器实际存储与发送、后续刷新和退出行为仍需验证；不据 SameSite 设置推断完整 CSRF 契约 |
+| 默认期限与配置名称变化 | [config.go](../../ripple_backend/internal/config/config.go) 默认 `auth.access_token_ttl` 为 15 分钟、`auth.refresh_token_ttl` 为 7 天；JWT 仍含 `sub` 与 `exp` | 删除旧的 30 分钟假设；前端依据令牌和最终契约判断到期，不把代码默认值写成固定前端计时器，也不推断部署配置 |
+| 当前业务鉴权错误未细分 | [JWTAuth](../../ripple_backend/internal/middleware/auth.go) 对缺失、格式错误或校验失败仍返回 `401 / UNAUTHORIZED`；尚无刷新失败分类 | 保留登录凭据错误与业务鉴权错误的区分，等待刷新接口定义最终失效和临时故障语义；前端不猜测新增业务码 |
+| OpenAPI 未随源码更新 | [OpenAPI](../../ripple_backend/docs/openapi.yaml) 仍使用旧注册/登录路径、`jwt` 配置和 30 分钟说明，缺少新刷新与退出操作；文件哈希未变 | 当前文档不作为新认证的可交付快照；待后端文档与已实现行为一致，再按已确认流程同步、生成和检查差异，不手写第二份认证契约或直接改生成类型 |
 | 非认证业务对外行为未发现变化 | 本次 diff 中社区、评论、响应码与业务 handler 未变；帖子 Redis 访问由 repository 迁到 store，相关服务调用随之调整，公开查询与受保护写操作的路由范围未变 | 保留游客浏览、详情查询本人投票方向、固定每页 10 条、7 天投票窗口及现有页面规划；内部包名变化不增加前端模块 |
 
 在 `baf9922` 时尚不能从源码确认的接入条件：
@@ -604,7 +604,7 @@ Q6、Q7 已于 2026-10-03 获用户确认。以上均为前端请求层规则；
 | 退出实现 | `POST /api/v1/logout` 删除请求 Cookie 指向的令牌并清 Cookie；无 Cookie 或令牌已失效也返回 `204`，删除失败返回 `500`。已签发 Access JWT 不被撤销，自然到期前仍可用 |
 | Cookie | 登录与刷新使用 `refresh_token`、`Path=/`、HttpOnly、SameSite=Lax，Secure 由配置决定；刷新期限继承剩余 TTL。实际浏览器收发、持久性、部署配置与 CSRF 契约仍需核对 |
 | OpenAPI | 已更新到 17 个操作及新路径、轮换、退出语义；SHA256 为 `6539ce9aa42e0a4e1a02828008d5a5bf582495dcac6acb4efa299fc6b05cd0d0`。尚未复制快照、生成类型或联调 |
-| 后端文档入口 | 原接口说明已移除；改用[后端项目说明](../../bluebell_backend/README.md)与 OpenAPI |
+| 后端文档入口 | 原接口说明已移除；改用[后端项目说明](../../ripple_backend/README.md)与 OpenAPI |
 
 当前仍需明确的差异：
 
@@ -614,11 +614,11 @@ Q6、Q7 已于 2026-10-03 获用户确认。以上均为前端请求层规则；
 4. **刷新响应丢失**：轮换后旧凭据立即失效，后续 `401` 可能来自旧令牌重复使用；需核对浏览器是否已收新 Cookie、并发和真正失效，明确恢复行为，不套用普通读取自动重试或直接将网络故障当作已退出。
 5. **文档导航建议冲突**：OpenAPI 建议刷新 `401` 后一律清本地状态并跳登录，与已确认的“公共阅读留在原处、保留草稿、按需登录”不一致。保持前端已确认交互，按真实错误语义处理，不照搬该导航建议。
 
-对应源码：[认证处理器](../../bluebell_backend/internal/handler/auth.go)、[认证服务](../../bluebell_backend/internal/service/auth.go)、[刷新令牌存储](../../bluebell_backend/internal/store/refresh_token.go)、[JWT 声明](../../bluebell_backend/internal/service/token.go)。这些差异作为相关认证实现与验收前置事项保留；其他已确认范围不变，不因本次规格整理启动编码或后端修改。
+对应源码：[认证处理器](../../ripple_backend/internal/handler/auth.go)、[认证服务](../../ripple_backend/internal/service/auth.go)、[刷新令牌存储](../../ripple_backend/internal/store/refresh_token.go)、[JWT 声明](../../ripple_backend/internal/service/token.go)。这些差异作为相关认证实现与验收前置事项保留；其他已确认范围不变，不因本次规格整理启动编码或后端修改。
 
 ### 请求工具核查
 
-- [`openapi-fetch` 的响应](https://openapi-ts.dev/openapi-fetch/#response) 分为 `data`、`error`、`response`；这里的 `data` 是完整响应正文，不自动解开 Bluebell 的业务信封。有 HTTP 响应的失败与网络异常走不同通道，统一错误处理需要同时覆盖，见[错误处理说明](https://openapi-ts.dev/openapi-fetch/middleware-auth#error-handling)。
+- [`openapi-fetch` 的响应](https://openapi-ts.dev/openapi-fetch/#response) 分为 `data`、`error`、`response`；这里的 `data` 是完整响应正文，不自动解开 Ripple 的业务信封。有 HTTP 响应的失败与网络异常走不同通道，统一错误处理需要同时覆盖，见[错误处理说明](https://openapi-ts.dev/openapi-fetch/middleware-auth#error-handling)。
 - `204` 没有正文，不能通过 `data` 是否存在判断成功。删除 mutation 可以返回空结果；若某个 query 需要表达无值，应使用明确值如 `null`，不能成功返回 `undefined`，见 [Query Functions](https://tanstack.com/query/latest/docs/framework/react/guides/query-functions)。
 - Query 依靠抛错或 rejected Promise 识别失败，原样返回失败对象不会自动进入错误状态。客户端 query 默认会重试 3 次，不能把该默认行为当作项目已确认的策略，见[错误识别](https://tanstack.com/query/latest/docs/framework/react/guides/query-functions#handling-and-throwing-errors)与[重试说明](https://tanstack.com/query/latest/docs/framework/react/guides/query-retries)。
 - 请求需接收并传递 Query 的 `AbortSignal`，错误处理不能把主动取消混同网络故障；取消等待不代表服务端撤销写操作，见 [Query Cancellation](https://tanstack.com/query/latest/docs/framework/react/guides/query-cancellation)。
@@ -633,23 +633,23 @@ Q6、Q7 已于 2026-10-03 获用户确认。以上均为前端请求层规则；
 - **已完成**：前端设计决策、源码事实记录和接入依赖整理；Phase 1 的删除流程与 Phase 2、Phase 3 的缓存清理范围已同步。
 - **待接入条件**：刷新、退出和 OpenAPI 已更新并只读核查；按最新规格复核明确用户名恢复、认证并发、异常恢复和部署边界，再细化前端协调并实测，不修改后端。已确认交互不因接口文档建议而自动改动。
 - **待实施**：工程初始化、契约与类型生成、客户端和业务页面、行为测试、真实接口及浏览器验收均未完成。实施需用户另行启动并确认 Implementation Plan，本次收口不授权开始编码。
-- **规格发布**：已通过 to-spec 发布[首版规格 #1](https://github.com/jasper0507/bluebell_frontend/issues/1)，标记为 `ready-for-agent`，包含 70 条用户故事、实现约束、验收矩阵和最新认证差异。用户已确认测试边界：浏览器用户流程为主，关键规则补充模块公开入口测试，认证使用真实浏览器与后端验收；不预先搭建多层测试框架。
+- **规格发布**：已通过 to-spec 发布[首版规格 #1](https://github.com/jasper0507/ripple_frontend/issues/1)，标记为 `ready-for-agent`，包含 70 条用户故事、实现约束、验收矩阵和最新认证差异。用户已确认测试边界：浏览器用户流程为主，关键规则补充模块公开入口测试，认证使用真实浏览器与后端验收；不预先搭建多层测试框架。
 - **模块任务**：用户确认按模块拆分，已发布七张模块票并建立八条原生阻塞关系，见下方任务表；每票包含该模块的实现、测试与文档。
 - **后续实施**：按实际阻塞关系推进，任务发布不表示认证差异已解决，也不代替 Implementation Plan 确认。本次未启动编码或提交代码。
 
 ## 首版模块任务
 
-以下任务均引用[首版规格 #1](https://github.com/jasper0507/bluebell_frontend/issues/1)，标记为 `ready-for-agent`。分页、草稿、错误处理和测试归入对应业务模块；认证契约差异在账号认证与会话模块内收口。
+以下任务均引用[首版规格 #1](https://github.com/jasper0507/ripple_frontend/issues/1)，标记为 `ready-for-agent`。分页、草稿、错误处理和测试归入对应业务模块；认证契约差异在账号认证与会话模块内收口。
 
 | 模块 | Issue | 前置 Issue |
 | --- | --- | --- |
-| 工程与 API 基础 | [#2](https://github.com/jasper0507/bluebell_frontend/issues/2) | 无 |
-| 账号认证与会话 | [#3](https://github.com/jasper0507/bluebell_frontend/issues/3) | [#2](https://github.com/jasper0507/bluebell_frontend/issues/2) |
-| 社区 | [#4](https://github.com/jasper0507/bluebell_frontend/issues/4) | [#2](https://github.com/jasper0507/bluebell_frontend/issues/2) |
-| 帖子 | [#5](https://github.com/jasper0507/bluebell_frontend/issues/5) | [#3](https://github.com/jasper0507/bluebell_frontend/issues/3)、[#4](https://github.com/jasper0507/bluebell_frontend/issues/4) |
-| 评论与回复 | [#6](https://github.com/jasper0507/bluebell_frontend/issues/6) | [#5](https://github.com/jasper0507/bluebell_frontend/issues/5) |
-| 投票 | [#7](https://github.com/jasper0507/bluebell_frontend/issues/7) | [#5](https://github.com/jasper0507/bluebell_frontend/issues/5) |
-| 部署、演示准备与完整验收 | [#8](https://github.com/jasper0507/bluebell_frontend/issues/8) | [#6](https://github.com/jasper0507/bluebell_frontend/issues/6)、[#7](https://github.com/jasper0507/bluebell_frontend/issues/7) |
+| 工程与 API 基础 | [#2](https://github.com/jasper0507/ripple_frontend/issues/2) | 无 |
+| 账号认证与会话 | [#3](https://github.com/jasper0507/ripple_frontend/issues/3) | [#2](https://github.com/jasper0507/ripple_frontend/issues/2) |
+| 社区 | [#4](https://github.com/jasper0507/ripple_frontend/issues/4) | [#2](https://github.com/jasper0507/ripple_frontend/issues/2) |
+| 帖子 | [#5](https://github.com/jasper0507/ripple_frontend/issues/5) | [#3](https://github.com/jasper0507/ripple_frontend/issues/3)、[#4](https://github.com/jasper0507/ripple_frontend/issues/4) |
+| 评论与回复 | [#6](https://github.com/jasper0507/ripple_frontend/issues/6) | [#5](https://github.com/jasper0507/ripple_frontend/issues/5) |
+| 投票 | [#7](https://github.com/jasper0507/ripple_frontend/issues/7) | [#5](https://github.com/jasper0507/ripple_frontend/issues/5) |
+| 部署、演示准备与完整验收 | [#8](https://github.com/jasper0507/ripple_frontend/issues/8) | [#6](https://github.com/jasper0507/ripple_frontend/issues/6)、[#7](https://github.com/jasper0507/ripple_frontend/issues/7) |
 
 依赖同时记录在各票正文和 GitHub 原生阻塞关系中。创建时首个无阻塞任务为 #2；执行时应读取 Issue 的实时状态，仅在全部前置任务完成后开始对应模块。`ready-for-agent` 不代表阻塞条件已解除，认证差异仍需按相关任务验收条件明确。
 
@@ -680,7 +680,7 @@ Q6、Q7 已于 2026-10-03 获用户确认。以上均为前端请求层规则；
 
 创建成功只返回 ID。回显用该 ID、本次正文和回复目标，不伪造时间。没读到底时回显留在编辑区附近，之后读到同一 ID 再合并。已经读到底时先核对当前末页，再按连续页码继续加载，满页和未满页都这样处理。写成功但随后的列表核对失败时，两件事分开说。
 
-草稿键是 `bluebell:draft:{用户 UUID}:comment:{帖子 ID}`，存在当前标签页，带回复目标。编辑区持有一份草稿，正文、回复目标和目标失效标记一起读写。成功或放弃才清这份草稿。主动退出沿用账号前缀清掉该账号的草稿。旧会话的成功回调不清新草稿，也不把回显安到新账号上。
+草稿键是 `ripple:draft:{用户 UUID}:comment:{帖子 ID}`，存在当前标签页，带回复目标。编辑区持有一份草稿，正文、回复目标和目标失效标记一起读写。成功或放弃才清这份草稿。主动退出沿用账号前缀清掉该账号的草稿。旧会话的成功回调不清新草稿，也不把回显安到新账号上。
 
 只有评论作者能删除。204 移除目标和回显，保留回复，并暂停这篇帖子继续追加。从第一批刷新只重建评论并滚到评论区，正文和草稿还在。迟到的旧页不能把已删除的评论再显示出来。验证见 [评论与回复验证记录](verification/comments.md)。
 

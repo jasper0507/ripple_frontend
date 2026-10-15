@@ -1,12 +1,12 @@
 # Issue tracker: GitHub
 
-Issue 和规格存放在 https://github.com/jasper0507/bluebell_frontend/issues。
+Issue 和规格存放在 https://github.com/jasper0507/ripple_frontend/issues。
 
 ## 操作约定
 
 使用 gh CLI。所有 gh issue / gh pr 命令显式指定
-`--repo jasper0507/bluebell_frontend`；
-gh api 路径使用 `repos/jasper0507/bluebell_frontend/`。
+`--repo jasper0507/ripple_frontend`；
+gh api 路径使用 `repos/jasper0507/ripple_frontend/`。
 
 - 创建：gh issue create，提供 --title 和 --body-file。
 - 读取：gh issue view <number> --comments；需要结构化数据时使用 --json。

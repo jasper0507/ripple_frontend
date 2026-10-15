@@ -1,4 +1,4 @@
-# Bluebell UI 与 UX 设计交付
+# Ripple UI 与 UX 设计交付
 
 本目录记录当前前端的帖子流与阅读布局。用户已确认实施，列表评论数先省略；后端未修改。运行应用与静态视觉稿的验证范围不同，先读[发布入口验证](verification/publish-entry.md)及[界面与交互验证](verification/ux-polish.md)。
 

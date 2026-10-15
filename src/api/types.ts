@@ -314,26 +314,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/health": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * 获取服务存活状态
-         * @description 固定返回 ok；不检查 MySQL、Redis 的实时可用性。
-         */
-        get: operations["getHealth"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -1287,34 +1267,6 @@ export interface operations {
                     "application/json": {
                         /** @constant */
                         message: "pong";
-                    };
-                };
-            };
-        };
-    };
-    getHealth: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description 服务存活。 */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example {
-                     *       "status": "ok"
-                     *     }
-                     */
-                    "application/json": {
-                        /** @constant */
-                        status: "ok";
                     };
                 };
             };

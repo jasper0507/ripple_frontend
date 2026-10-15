@@ -168,8 +168,8 @@ export function ContentLayout() {
       <a className="skip-link" href="#main-content">跳到内容</a>
       <header className="site-header">
         <div className="site-container header-inner">
-          <Link to="/" className="brand" aria-label="Bluebell 首页">
-            <span className="invisible" aria-hidden="true">Bluebell</span>
+          <Link to="/" className="brand" aria-label="Ripple 首页">
+            <span className="invisible" aria-hidden="true">Ripple</span>
             <img className="brand-wordmark" src="/wordmark.svg" alt="" aria-hidden="true" />
           </Link>
           <CommunityNav className="header-communities hidden md:block" />
@@ -185,7 +185,7 @@ export function ContentLayout() {
         </main>
         {!reading ? <ForumSidebar /> : null}
       </div>
-      <footer className="site-container"><div className="site-footer"><span>Bluebell</span><span>按社区组织的讨论平台</span></div></footer>
+      <footer className="site-container"><div className="site-footer"><span>Ripple</span><span>按社区组织的讨论平台</span></div></footer>
     </div>
   )
 }

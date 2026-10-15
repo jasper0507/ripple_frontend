@@ -20,8 +20,8 @@ export interface AuthChannel {
   subscribe(listener: (message: AuthSyncMessage) => void): () => void
 }
 
-export const AUTH_LOCK_NAME = 'bluebell:auth:lock'
-export const AUTH_CHANNEL_NAME = 'bluebell:auth'
+export const AUTH_LOCK_NAME = 'ripple:auth:lock'
+export const AUTH_CHANNEL_NAME = 'ripple:auth'
 
 /** 不支持 Web Locks 时退化为标签页内直接执行（主浏览器 Chrome/Edge 均支持，降级记入验证文档） */
 export function createWebAuthLock(): AuthLock {

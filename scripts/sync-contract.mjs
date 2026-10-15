@@ -10,7 +10,7 @@ import { join, resolve } from 'node:path'
 
 const root = resolve(import.meta.dirname, '..')
 const source = resolve(
-  process.argv[2] ?? join(root, '..', 'bluebell_backend', 'docs', 'openapi.yaml'),
+  process.argv[2] ?? join(root, '..', 'ripple_backend', 'docs', 'openapi.yaml'),
 )
 if (!existsSync(source)) {
   console.error(`找不到契约来源：${source}`)

@@ -8,7 +8,7 @@ PNPM ?= pnpm
 HOST ?= 127.0.0.1
 DEV_PORT ?= 5173
 PREVIEW_PORT ?= 4173
-OPENAPI ?= ../bluebell_backend/docs/openapi.yaml
+OPENAPI ?= ../ripple_backend/docs/openapi.yaml
 
 # 依赖安装由 install 显式执行，运行脚本时不触发 pnpm 自动安装。
 PNPM_RUN = $(PNPM) --config.verify-deps-before-run=false run

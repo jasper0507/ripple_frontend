@@ -15,7 +15,7 @@ import {
 function makeToken(sub: string, expSeconds: number): string {
   const encode = (value: unknown) =>
     btoa(JSON.stringify(value)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
-  return `${encode({ alg: 'HS256', typ: 'JWT' })}.${encode({ sub, exp: expSeconds, iat: 1, iss: 'bluebell' })}.sig`
+  return `${encode({ alg: 'HS256', typ: 'JWT' })}.${encode({ sub, exp: expSeconds, iat: 1, iss: 'ripple' })}.sig`
 }
 
 export const FAR_FUTURE = 4_000_000_000

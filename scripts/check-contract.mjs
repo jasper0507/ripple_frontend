@@ -11,7 +11,7 @@ const snapshot = join(root, 'openapi', 'openapi.yaml')
 const committed = join(root, 'src', 'api', 'types.ts')
 const bin = join(root, 'node_modules', '.bin', 'openapi-typescript')
 
-const outDir = mkdtempSync(join(tmpdir(), 'bluebell-contract-'))
+const outDir = mkdtempSync(join(tmpdir(), 'ripple-contract-'))
 const generated = join(outDir, 'types.ts')
 try {
   execFileSync(bin, [snapshot, '-o', generated], { stdio: 'inherit' })

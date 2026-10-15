@@ -39,7 +39,7 @@ describe('发帖草稿', () => {
     expect(readPostDraft(storage, 'user-a')).toEqual(draft)
     expect(readPostDraft(storage, 'user-b')?.title).toBe('别人的')
     expect(readPostDraft(storage, 'user-c')).toBeNull()
-    expect(postDraftStorageKey('user-a')).toBe('bluebell:draft:user-a:post')
+    expect(postDraftStorageKey('user-a')).toBe('ripple:draft:user-a:post')
   })
 
   it('损坏的草稿视为没有', () => {

@@ -26,15 +26,15 @@
 
 1. **身份恢复（用户名）**：刷新响应不含用户名，JWT 仅 `iss/sub(UUID)/iat/exp`，
    无当前用户资料接口。**用户决定：localStorage 持久化用户名**
-   （`bluebell:auth:username`，登录时写入，最终失效与主动退出时清除）。
+   （`ripple:auth:username`，登录时写入，最终失效与主动退出时清除）。
    这是对规格"不擅自持久化身份资料"的明确授权例外。残留边界：用户手动
    单独清 localStorage 而不清 Cookie 时，恢复后入口显示"已登录"占位而非用户名。
 2. **一次性轮换**：Lua 脚本原子轮换、旧令牌即删、继承剩余 TTL，旧令牌重用
    返回 `401 / UNAUTHORIZED`（静态调用链复核，未运行复现）。
 3. **跨标签页协调**：**用户决定：Web Locks + BroadcastChannel**。
    所有触碰共享 Cookie 的操作（refresh/login/logout）经
-   `navigator.locks`（`bluebell:auth:lock`）浏览器级串行；登录、退出、
-   最终失效经 BroadcastChannel（`bluebell:auth`）按代次同步；不广播访问
+   `navigator.locks`（`ripple:auth:lock`）浏览器级串行；登录、退出、
+   最终失效经 BroadcastChannel（`ripple:auth`）按代次同步；不广播访问
    令牌本体，各标签页持各自的内存令牌。不支持 Web Locks 时退化为标签页内
    直接执行（主浏览器 Chrome/Edge 均支持，降级在验证文档记录）。
 4. **退出竞态**：退出在同一把锁内等待在途刷新结束后再发送，使 logout
@@ -64,7 +64,7 @@
 - 账号状态隔离使用用户 UUID（JWT `sub`）与本次登录会话标识
   （`crypto.randomUUID()`，登录或恢复时生成）；续期沿用，重新登录或换账号
   重新隔离；令牌不进入任何缓存标识。
-- 浏览器会话代次（`bluebell:auth:epoch`）：登录/退出时递增并持久化；
+- 浏览器会话代次（`ripple:auth:epoch`）：登录/退出时递增并持久化；
   休眠标签页在受保护操作前核对代次，不一致则丢弃本地状态并重新恢复。
 - 最终失效：清身份、持久用户名与账号相关查询缓存，保留草稿与公共阅读；
   主动退出：额外清理该账号在本标签页的草稿，其他设备会话不受影响。

@@ -12,8 +12,8 @@ export function AuthLayout() {
     <div className="font-sans bg-background text-foreground flex min-h-svh flex-col items-center justify-center px-4 py-10 md:py-16">
       <div className="auth-shell">
         <header className="mb-6 text-center">
-          <Link to="/" className="brand" aria-label="Bluebell 首页">
-            <span className="invisible" aria-hidden="true">Bluebell</span>
+          <Link to="/" className="brand" aria-label="Ripple 首页">
+            <span className="invisible" aria-hidden="true">Ripple</span>
             <img className="brand-wordmark" src="/wordmark.svg" alt="" aria-hidden="true" />
           </Link>
           <p className="mt-3 text-sm text-muted">按社区组织的讨论平台</p>

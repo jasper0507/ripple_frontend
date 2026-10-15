@@ -46,7 +46,7 @@ describe('评论草稿', () => {
     expect(readCommentDraft(storage, 'user-a', 8)?.content).toBe('另一篇')
     expect(readCommentDraft(storage, 'user-b', 7)?.content).toBe('别人的')
     expect(readCommentDraft(storage, 'user-c', 7)).toBeNull()
-    expect(commentDraftStorageKey('user-a', 7)).toBe('bluebell:draft:user-a:comment:7')
+    expect(commentDraftStorageKey('user-a', 7)).toBe('ripple:draft:user-a:comment:7')
   })
 
   it('损坏的草稿视为没有', () => {

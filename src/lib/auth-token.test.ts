@@ -9,7 +9,7 @@ function makeToken(payload: unknown): string {
 
 describe('readAccessTokenClaims', () => {
   it('解析 sub 与 exp', () => {
-    const token = makeToken({ iss: 'bluebell', sub: 'user-uuid-1', iat: 100, exp: 1900 })
+    const token = makeToken({ iss: 'ripple', sub: 'user-uuid-1', iat: 100, exp: 1900 })
     expect(readAccessTokenClaims(token)).toEqual({
       userUuid: 'user-uuid-1',
       expiresAtMs: 1_900_000,

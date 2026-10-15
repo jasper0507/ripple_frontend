@@ -50,7 +50,7 @@
 6. **Cookie 与 CSRF**：Cookie 为 `refresh_token`、`Path=/`、HttpOnly、
    SameSite=Lax、`Expires/MaxAge` 来自剩余 TTL；Secure 由部署配置决定。
    后端无 CSRF token；refresh/logout 为 POST，SameSite=Lax 下跨站 POST
-   不携带 Cookie，结合同源代理（开发 Vite、部署 Nginx）构成边界。
+   不携带 Cookie，结合同源代理（开发 Vite、部署 Caddy；2026-10-16 由 Nginx 改为 Caddy，同源边界不变）构成边界。
    **用户已接受**：演示范围依赖 SameSite=Lax+同源，真实浏览器实测收发、
    持久性与退出清除；部署时验证 `cookie_secure=true`。
 

@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 import { defineConfig } from 'vite'
 
 // 开发代理：保留完整 API 前缀，不重写路径。
-// 后端未配置 CORS，浏览器经 Vite 同源访问；部署由 Nginx 以相同路径反代。
+// 后端未配置 CORS，浏览器经 Vite 同源访问；部署由 Caddy 以相同路径反代。
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {

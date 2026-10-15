@@ -1,3 +1,5 @@
+> 2026-10-16 部署调整：用户决定用 Caddy 替代 Nginx 作为反向代理。同源 HTTPS 入口、`/api/v1` 保留完整路径反代、前端路由回退 `index.html`、API 错误不回退 HTML 等约定不变；Caddy 自动申请证书。后端需把 Caddy 地址加入 `http.trusted_proxies` 并开启 `auth.cookie_secure`。Caddyfile 示例与本地验证见 [README](../README.md#部署)。本条替代下方 Phase 2 及后续章节中的 Nginx 选择。
+
 > 2026-10-15 后端同步：当前源码已适配后端 `d18c55b`。注册密码改为 8–20 位不含空格的可打印 ASCII，须同时含大写字母、小写字母、数字和特殊符号；登录校验不变。`/api/v1` 按客户端 IP 限流，返回 `429 / TOO_MANY_REQUESTS`（注册和登录更严），前端单独分类为限流：读取不自动重试，写操作确定未执行、保留输入并提示稍后再试，续期被限流按临时故障处理且不立即重试。帖子已删除时删除其评论返回 404，沿用已有处理。部署需让后端 `http.trusted_proxies` 识别 Nginx。见[契约来源](../openapi/README.md)与[维护验证](verification/backend-sync-2026-10-15.md)。本条替代下方注册密码规则及请求层错误分类中与此冲突的旧事实。
 
 > 2026-10-08 后端同步：当前源码已适配后端 `a173d1b`，作者字段使用 `author_username`，列表移除票数，登录后恢复本人投票方向读取，投票无七天截止。帖子列表允许短页和空页；正文／评论分别限 10,000／2,000 个 Unicode 字符。维护期间后端已补齐 OpenAPI 长度限制，最终快照见[契约来源](../openapi/README.md)，实施与验证见[维护验证](verification/backend-sync.md)。本条替代下方旧接口事实与未初始化进度；下方日期章节保留历史记录。

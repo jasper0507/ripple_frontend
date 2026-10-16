@@ -136,7 +136,7 @@ function MobileMenu() {
         <Modal sheet title="菜单" onClose={() => setOpen(false)}>
           <Button type="button" variant="ghost" size="icon" data-initial-focus aria-label="关闭菜单" className="absolute right-3 top-3" onClick={() => setOpen(false)}><X aria-hidden /></Button>
           <div className="menu-section">
-            <Button asChild variant="outline" size="sm" className="bg-hover text-association font-normal hover:bg-line hover:text-foreground">
+            <Button asChild variant="outline" size="sm" className="rounded-full px-3.5 bg-hover text-association font-normal hover:bg-line hover:text-foreground">
               <Link to="/posts/new" state={publishFrom ? { from: publishFrom } : undefined}
                 onClick={() => {
                   const target = postListTargetFromPath(here)

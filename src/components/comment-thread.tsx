@@ -424,8 +424,8 @@ export function CommentThread({ postId }: { postId: number }) {
       <div className="comment-heading">
         <h2 className="section-title">评论</h2>
         <div className="comment-heading-actions">
-          <Button type="button" variant="outline" size="sm" onClick={focusComposer}><SquarePen aria-hidden />写评论</Button>
-          <Button type="button" variant="ghost" className="px-2.5 font-normal" disabled={list.isFetching} onClick={refreshFromStart}>
+          <Button type="button" variant="outline" size="sm" className="rounded-full px-3.5" onClick={focusComposer}><SquarePen aria-hidden />写评论</Button>
+          <Button type="button" variant="ghost" className="rounded-full px-3 font-normal" disabled={list.isFetching} onClick={refreshFromStart}>
             <RefreshCw aria-hidden />刷新
           </Button>
         </div>

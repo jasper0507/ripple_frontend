@@ -189,8 +189,8 @@ export function VoteControls({
               type="button"
               variant={action.direction === 0 ? 'ghost' : 'outline'}
               className={action.direction === 0
-                ? 'px-2.5 font-normal aria-pressed:text-primary'
-                : 'px-3.5 hover:border-primary hover:bg-primary-soft hover:text-primary aria-pressed:border-primary aria-pressed:bg-primary-soft aria-pressed:text-primary'}
+                ? 'rounded-full px-3 font-normal aria-pressed:text-primary'
+                : 'rounded-full px-4 hover:border-primary hover:bg-primary-soft hover:text-primary aria-pressed:border-primary aria-pressed:bg-primary-soft aria-pressed:text-primary'}
               aria-label={action.direction === 0 ? action.label : `${action.label}，${action.direction === 1 ? upVotes : downVotes} 票`}
               aria-pressed={selected}
               aria-describedby="vote-status"

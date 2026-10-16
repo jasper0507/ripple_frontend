@@ -130,7 +130,7 @@ export function PostList({
       <div className="list-toolbar">
         <span className="list-scope" title={scopeLabel}>{scopeLabel}</span>
         <OrderLinks order={order} />
-        <Button asChild variant="outline" size="sm" className="list-publish bg-hover text-association font-normal hover:bg-line hover:text-foreground">
+        <Button asChild variant="outline" size="sm" className="list-publish rounded-full px-3.5 bg-hover text-association font-normal hover:bg-line hover:text-foreground">
           <Link to="/posts/new" state={{ from }} onClick={() => markListPreserve(postListMemory, viewKey, window.scrollY)}>
             <SquarePen aria-hidden />发布帖子
           </Link>

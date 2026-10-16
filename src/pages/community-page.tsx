@@ -38,15 +38,15 @@ function CommunityLoadFailed({
 function CommunityIntro({ community }: { community: Community }) {
   const introduction = community.introduction.trim()
   return (
-    <header className="max-w-[760px]">
+    <header className="max-w-[760px] pb-2">
       <h1 className="page-title">{community.name}</h1>
       <p className="mt-2 text-[13px] text-muted">创建于 {formatTimestamp(community.created_at)}</p>
       {introduction.length > 240 ? (
         <details className="community-introduction mt-4">
-          <summary className="min-h-11 py-3 text-sm font-medium text-primary"><span className="intro-expand">展开简介</span><span className="intro-collapse">收起简介</span></summary>
-          <p className="text-base leading-7 whitespace-pre-wrap [overflow-wrap:anywhere]">{introduction}</p>
+          <summary className="min-h-11 py-2.5 text-sm font-medium text-primary"><span className="intro-expand">展开简介</span><span className="intro-collapse">收起简介</span></summary>
+          <p className="mt-1 text-[15.5px] leading-7 whitespace-pre-wrap [overflow-wrap:anywhere]">{introduction}</p>
         </details>
-      ) : <p className="mt-4 text-base leading-7 whitespace-pre-wrap [overflow-wrap:anywhere]">{introduction || '这个社区还没有简介。'}</p>}
+      ) : <p className="mt-4 text-[15.5px] leading-7 whitespace-pre-wrap [overflow-wrap:anywhere]">{introduction || '这个社区还没有简介。'}</p>}
     </header>
   )
 }
